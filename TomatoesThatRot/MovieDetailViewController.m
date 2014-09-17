@@ -73,7 +73,7 @@
     // set the movie synopsis
     self.movieTitleLabel.text = [NSString stringWithFormat:@"%@ (%@) ", self.selectedMovie[@"title"], self.selectedMovie[@"year"]];
     self.movieSynopisisLabel.text = self.selectedMovie[@"synopsis"];
-    self.movieRateLabel.text = [NSString stringWithFormat:@"Critics Score:%@, Audience Score:%@", [[self.selectedMovie objectForKey:@"ratings"] valueForKey:@"critics_score"], [[self.selectedMovie objectForKey:@"ratings"] valueForKey:@"critics_score"]];
+    self.movieRateLabel.text = [NSString stringWithFormat:@"Critics Score:%@, Audience Score:%@", [[self.selectedMovie objectForKey:@"ratings"] valueForKey:@"critics_score"], [[self.selectedMovie objectForKey:@"ratings"] valueForKey:@"audience_score"]];
     
     self.movieSynopisisLabel.backgroundColor = self.movieRateLabel.backgroundColor = self.movieTitleLabel.backgroundColor = [UIColor blackColor];
     [self.movieDetailScrollView addSubview:self.movieTitleLabel];
