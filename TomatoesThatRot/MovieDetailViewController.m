@@ -8,6 +8,8 @@
 
 #import "MovieDetailViewController.h"
 #import "MoviesViewController.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @interface MovieDetailViewController ()
 @property (nonatomic, strong) UILabel *movieSynopisisLabel;
@@ -81,7 +83,7 @@
     [self.movieSynopisisLabel sizeToFit];
 
     
-    CGSize labelSize = CGSizeMake(self.movieSynopisisLabel.frame.size.width - 40, self.movieSynopisisLabel.frame.size.height + 300);
+    CGSize labelSize = CGSizeMake(self.movieSynopisisLabel.frame.size.width - 5, self.movieSynopisisLabel.frame.size.height + 320);
         self.movieDetailScrollView.contentSize = labelSize;
 }
 

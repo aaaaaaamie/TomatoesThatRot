@@ -9,6 +9,7 @@
 #import "MoviesViewController.h"
 #import "MovieDetailViewController.h"
 #import "MovieCell.h"
+#import "UIImageView+AFNetworking.h"
 
 // class extension
 @interface MoviesViewController ()
