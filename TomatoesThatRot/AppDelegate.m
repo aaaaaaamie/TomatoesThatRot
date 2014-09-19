@@ -23,6 +23,7 @@
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nvc;
     [nvc.navigationBar setBarStyle:UIBarStyleBlack];
+    nvc.navigationBar.translucent = NO;
     [self.window makeKeyAndVisible];
     
     return YES;

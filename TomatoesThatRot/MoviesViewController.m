@@ -10,6 +10,8 @@
 #import "MovieDetailViewController.h"
 #import "MovieCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "MMprogressHUD.h"
+
 
 // class extension
 @interface MoviesViewController ()
@@ -46,7 +48,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell"  bundle:nil] forCellReuseIdentifier:@"MovieCell"];
     
     // add a loading view (spinner) then try and fetch the data
-    [self.loadIndicator startAnimating];
+    [MMProgressHUD showWithTitle:@"Loading.."];
     [self fetchMovies];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -77,7 +79,7 @@
             // this will trigger numberOfRows and cellForRowAtIndexPath to be called again
             [self.tableView reloadData];
         } else {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, 320, 50)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
             label.text = @"Oops there's a network connection error";
             label.backgroundColor = [UIColor orangeColor];
             label.textColor = [UIColor whiteColor];
@@ -97,15 +99,14 @@
                                                       }
                                                       completion:^(BOOL finished) {
                                                           // try reload? not doing anything? Ask user to pull down
+                                                          // should remove the label from subview
+                                                          [label removeFromSuperview];
                                                       }];
                                  }
                              }];
+            
         }
-        if (self.loadIndicator != nil) {
-            [self.loadIndicator stopAnimating];
-            [self.loadIndicator removeFromSuperview];
-            self.loadIndicator = nil;
-        }
+        [MMProgressHUD dismiss];
     }];
 }
 
@@ -130,19 +131,19 @@
     cell.synopsis.text = movie[@"synopsis"];
     
     NSURL *imageURL = [NSURL URLWithString:[[movie objectForKey:@"posters"] valueForKey:@"thumbnail"]];
-    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-    cell.imageView.image = [UIImage imageWithData:imageData];
+    [cell.posterView setImageWithURL:imageURL];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // should navigate to the corresponding movie detail view
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     MovieDetailViewController *movieDetailView = [[MovieDetailViewController alloc] initWithNibName:@"MovieDetailViewController" bundle:nil];
 
     movieDetailView.selectedMovie = self.movies[indexPath.row];
-    [self.navigationController pushViewController:movieDetailView animated:NO];
+    [self.navigationController pushViewController:movieDetailView animated:YES];    
 }
 
 @end
